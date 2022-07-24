@@ -15,7 +15,7 @@ class ExpenseSum extends StatelessWidget {
         .orderBy('dateTime', descending: true)
         .snapshots();
 
-    var sumOfExpenses = 0;
+    int sumOfExpenses = 0;
 
     final currencyFormat =
         NumberFormat.currency(locale: 'en_IN', symbol: '₹', decimalDigits: 0);

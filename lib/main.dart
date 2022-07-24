@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'models/expense.dart';
 import 'screens/expenses_screen.dart';
 import 'screens/reports_screen.dart';
 import 'screens/settings_screen.dart';
@@ -21,7 +20,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int sum = 0;
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {

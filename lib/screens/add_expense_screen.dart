@@ -16,12 +16,12 @@ class AddExpenseScreen extends StatefulWidget {
 class _AddExpenseScreenState extends State<AddExpenseScreen> {
   final costController = TextEditingController();
   final noteController = TextEditingController();
-  var showSave = false;
+  bool showSave = false;
   String amount = "";
-  var selectedCategory = "Food";
-  var selectedDate = DateFormat('MMMM d, yyyy').format(DateTime.now());
+  String selectedCategory = "Food";
+  String selectedDate = DateFormat('MMMM d, yyyy').format(DateTime.now());
 
-  void setSelectedCategory(ExpenseType e) {
+  void _setSelectedCategory(ExpenseType e) {
     setState(() {
       selectedCategory = e.category;
     });
@@ -115,10 +115,12 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                         showModalBottomSheet(
                             context: context,
                             builder: (BuildContext ctx) {
-                              return SfDateRangePicker(
-                                selectionMode:
-                                    DateRangePickerSelectionMode.single,
-                                onSelectionChanged: _onSelectionChanged,
+                              return Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: SfDateRangePicker(
+                                  onSelectionChanged: _onSelectionChanged,
+                                  maxDate: DateTime.now(),
+                                ),
                               );
                             });
                       },
@@ -169,7 +171,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                         ),
                         CategoriesModal(
                           selectedCategory: selectedCategory,
-                          setSelectedCategory: setSelectedCategory,
+                          setSelectedCategory: _setSelectedCategory,
                         ),
                       ],
                     ),

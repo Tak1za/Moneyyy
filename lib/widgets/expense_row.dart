@@ -13,7 +13,7 @@ class ExpenseRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currencyFormat =
+    final NumberFormat currencyFormat =
         NumberFormat.currency(locale: 'en_IN', symbol: '₹', decimalDigits: 0);
     CollectionReference records =
         FirebaseFirestore.instance.collection("records");
