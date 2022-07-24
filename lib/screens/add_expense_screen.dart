@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:moneyyy/models/expense_type.dart';
 import 'package:moneyyy/widgets/categories_modal.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class AddExpenseScreen extends StatefulWidget {
   const AddExpenseScreen({Key? key}) : super(key: key);
@@ -18,10 +19,19 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   var showSave = false;
   String amount = "";
   var selectedCategory = "Food";
+  var selectedDate = DateFormat('MMMM d, yyyy').format(DateTime.now());
 
   void setSelectedCategory(ExpenseType e) {
     setState(() {
       selectedCategory = e.category;
+    });
+  }
+
+  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    setState(() {
+      selectedDate = DateFormat('MMMM d, yyyy')
+          .format(DateTime.parse(args.value.toString()));
+      Navigator.of(context).pop();
     });
   }
 
@@ -100,10 +110,23 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
               children: [
                 Row(
                   children: [
-                    Text(
-                      "Today at ${DateFormat('hh:mm a').format(DateTime.now())}",
-                      style: const TextStyle(
-                        color: Colors.grey,
+                    GestureDetector(
+                      onTap: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext ctx) {
+                              return SfDateRangePicker(
+                                selectionMode:
+                                    DateRangePickerSelectionMode.single,
+                                onSelectionChanged: _onSelectionChanged,
+                              );
+                            });
+                      },
+                      child: Text(
+                        selectedDate,
+                        style: const TextStyle(
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -161,7 +184,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                                 'category': selectedCategory,
                                 'note': noteController.text,
                                 'costRupees': costRupees,
-                                'dateTime': DateTime.now()
+                                'dateTime': DateFormat('MMMM d, yyyy')
+                                    .parse(selectedDate),
                               }).then((value) {
                                 Navigator.of(context).pop();
                               }).catchError((error) =>
