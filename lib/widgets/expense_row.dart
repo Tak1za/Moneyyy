@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:moneyyy/models/expense.dart';
@@ -14,6 +15,9 @@ class ExpenseRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final currencyFormat =
         NumberFormat.currency(locale: 'en_IN', symbol: '₹', decimalDigits: 0);
+    CollectionReference records =
+        FirebaseFirestore.instance.collection("records");
+
     return Dismissible(
       key: Key(expense.id),
       onDismissed: (direction) {
@@ -32,7 +36,14 @@ class ExpenseRow extends StatelessWidget {
                     const Text("Are you sure you wish to delete this item?"),
                 actions: <Widget>[
                   TextButton(
-                      onPressed: () => Navigator.of(context).pop(true),
+                      onPressed: () {
+                        records
+                            .doc(expense.id)
+                            .delete()
+                            .then((value) => Navigator.of(context).pop())
+                            .catchError((error) =>
+                                print("could not delete expense: $error"));
+                      },
                       child: const Text("DELETE")),
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(false),
