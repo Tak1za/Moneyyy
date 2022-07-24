@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "124655270559",
+    "project_id": "moneyy-93767",
+    "storage_bucket": "moneyy-93767.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124655270559:android:97c91b9e08ce31eeaa00aa",
+        "android_client_info": {
+          "package_name": "com.tak1za.moneyyy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "124655270559-csv4padt02en3do205gtk4qha51bd8q0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpoedzqxRYgnbwQhPtQVwmwmdQHwf4jNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "124655270559-csv4padt02en3do205gtk4qha51bd8q0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "124655270559-n60ogdg62hb6t2ssm9i761iijoqlc85b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tak1za.moneyyy"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
