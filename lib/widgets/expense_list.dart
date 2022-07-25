@@ -15,7 +15,7 @@ class ExpenseList extends StatelessWidget {
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> records = FirebaseFirestore.instance
         .collection("records")
-        .orderBy('dateTime', descending: true)
+        .orderBy('dateTime', descending: false)
         .snapshots();
     final NumberFormat currencyFormat =
         NumberFormat.currency(locale: 'en_IN', symbol: '₹', decimalDigits: 0);
@@ -37,7 +37,7 @@ class ExpenseList extends StatelessWidget {
               padding: EdgeInsets.all(20),
               child: Center(
                 child: Text(
-                  "Start adding your spends to view them here",
+                  "Start adding your spends for this week to view them",
                   style: TextStyle(
                     fontSize: 20,
                   ),
@@ -86,6 +86,21 @@ class ExpenseList extends StatelessWidget {
                   dateTime: (element['dateTime'] as Timestamp).toDate(),
                 ),
                 group: group,
+              ),
+            );
+          }
+
+          if (groupedData.isEmpty) {
+            return const Padding(
+              padding: EdgeInsets.all(20),
+              child: Center(
+                child: Text(
+                  "Start adding your spends for this week to view them",
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             );
           }

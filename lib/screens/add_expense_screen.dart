@@ -19,7 +19,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   bool showSave = false;
   String amount = "";
   String selectedCategory = "Food";
-  String selectedDate = DateFormat('MMMM d, yyyy').format(DateTime.now());
+  String selectedDate =
+      DateFormat('MMMM d, yyyy h:mm a').format(DateTime.now());
 
   void _setSelectedCategory(ExpenseType e) {
     setState(() {
@@ -29,8 +30,13 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     setState(() {
-      selectedDate = DateFormat('MMMM d, yyyy')
-          .format(DateTime.parse(args.value.toString()));
+      DateTime now = DateTime.now();
+      DateTime selectedDateTime = DateTime.parse(args.value.toString());
+      selectedDateTime = selectedDateTime.add(
+        Duration(hours: now.hour, minutes: now.minute),
+      );
+      selectedDate = DateFormat('MMMM d, yyyy h:mm a').format(selectedDateTime);
+
       Navigator.of(context).pop();
     });
   }
@@ -125,7 +131,9 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                             });
                       },
                       child: Text(
-                        selectedDate,
+                        DateFormat("MMMM d, yyyy").format(
+                          DateFormat("MMMM d, yyyy h:mm a").parse(selectedDate),
+                        ),
                         style: const TextStyle(
                           color: Colors.grey,
                         ),
@@ -186,7 +194,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                                 'category': selectedCategory,
                                 'note': noteController.text,
                                 'costRupees': costRupees,
-                                'dateTime': DateFormat('MMMM d, yyyy')
+                                'dateTime': DateFormat('MMMM d, yyyy h:mm a')
                                     .parse(selectedDate),
                               }).then((value) {
                                 Navigator.of(context).pop();
