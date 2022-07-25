@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:moneyyy/helpers/date_helpers.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../screens/add_expense_screen.dart';
@@ -54,9 +55,25 @@ class ExpenseSum extends StatelessWidget {
                 }
 
                 final data = snapshot.requireData;
-                var sum = 0;
+                int sum = 0;
+
                 for (var element in data.docs) {
-                  sum += element['costRupees'] as int;
+                  final nowDate = DateTime.now();
+                  final elementDate =
+                      (element['dateTime'] as Timestamp).toDate();
+                  final formattedElementDate = DateTime(
+                      elementDate.year, elementDate.month, elementDate.day);
+                  final formattedNowDate =
+                      DateTime(nowDate.year, nowDate.month, nowDate.day);
+
+                  if (formattedElementDate.isToday() ||
+                      formattedElementDate.isAfter(
+                        formattedNowDate.subtract(
+                          Duration(days: formattedNowDate.weekday - 1),
+                        ),
+                      )) {
+                    sum += element['costRupees'] as int;
+                  }
                 }
 
                 sumOfExpenses = sum;
