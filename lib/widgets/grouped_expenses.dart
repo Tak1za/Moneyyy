@@ -62,7 +62,7 @@ class GroupedExpenses extends StatelessWidget {
               if (formattedElementDate.isToday() ||
                   formattedElementDate.isAfter(
                     formattedNowDate.subtract(
-                      Duration(days: formattedNowDate.weekday - 1),
+                      Duration(days: formattedNowDate.weekday),
                     ),
                   )) {
                 if (element['category'] == expenseType.category) {

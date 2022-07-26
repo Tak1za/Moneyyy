@@ -24,7 +24,6 @@ class _ReportsScreenState extends State<ReportsScreen> {
             currencyFormat.format(300),
             style: const TextStyle(
               fontSize: 40,
-              fontWeight: FontWeight.bold,
             ),
           ),
           const Text(

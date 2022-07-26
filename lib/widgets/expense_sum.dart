@@ -69,7 +69,7 @@ class ExpenseSum extends StatelessWidget {
                   if (formattedElementDate.isToday() ||
                       formattedElementDate.isAfter(
                         formattedNowDate.subtract(
-                          Duration(days: formattedNowDate.weekday - 1),
+                          Duration(days: formattedNowDate.weekday),
                         ),
                       )) {
                     sum += element['costRupees'] as int;

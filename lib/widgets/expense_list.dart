@@ -63,7 +63,7 @@ class ExpenseList extends StatelessWidget {
               group = "Today";
             } else if (formattedElementDate.isAfter(
               formattedNowDate.subtract(
-                Duration(days: formattedNowDate.weekday - 1),
+                Duration(days: formattedNowDate.weekday),
               ),
             )) {
               if (formattedElementDate.isYesterday()) {
@@ -145,7 +145,10 @@ class ExpenseList extends StatelessWidget {
                     (element) => sum += element.data.costRupees,
                   );
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 20,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
