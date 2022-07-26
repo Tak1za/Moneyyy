@@ -4,15 +4,12 @@ import 'package:intl/intl.dart';
 import 'package:moneyyy/models/expense.dart';
 
 class ExpenseValue extends StatelessWidget {
-  const ExpenseValue({Key? key}) : super(key: key);
+  final Stream<QuerySnapshot<Object?>> records;
+
+  const ExpenseValue(this.records, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> records = FirebaseFirestore.instance
-        .collection("records")
-        .orderBy('dateTime', descending: true)
-        .snapshots();
-
     int sumOfExpenses = 0;
 
     final currencyFormat =

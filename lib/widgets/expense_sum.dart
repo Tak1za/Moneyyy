@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:moneyyy/widgets/expense_value.dart';
 import 'package:page_transition/page_transition.dart';
@@ -9,6 +10,11 @@ class ExpenseSum extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Stream<QuerySnapshot> records = FirebaseFirestore.instance
+        .collection("records")
+        .orderBy('dateTime', descending: true)
+        .snapshots();
+
     return FittedBox(
       fit: BoxFit.contain,
       child: Container(
@@ -23,7 +29,7 @@ class ExpenseSum extends StatelessWidget {
                 color: Colors.grey,
               ),
             ),
-            const ExpenseValue(),
+            ExpenseValue(records),
             const SizedBox(
               height: 20,
             ),
