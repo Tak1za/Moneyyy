@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:moneyyy/widgets/expense_value.dart';
 import 'package:moneyyy/widgets/grouped_expenses.dart';
 
 class ReportsScreen extends StatefulWidget {
@@ -12,20 +13,12 @@ class ReportsScreen extends StatefulWidget {
 class _ReportsScreenState extends State<ReportsScreen> {
   @override
   Widget build(BuildContext context) {
-    final currencyFormat =
-        NumberFormat.currency(locale: 'en_IN', symbol: '₹', decimalDigits: 0);
-
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            currencyFormat.format(300),
-            style: const TextStyle(
-              fontSize: 40,
-            ),
-          ),
+          const ExpenseValue(),
           const Text(
             "Total spent this week",
             style: TextStyle(
@@ -39,6 +32,14 @@ class _ReportsScreenState extends State<ReportsScreen> {
             alignment: Alignment.center,
             height: 200,
             child: const Text("Chart goes here"),
+          ),
+          Container(
+            alignment: Alignment.center,
+            height: 50,
+            child: const Text("Week, Month, Year selector goes here"),
+          ),
+          const SizedBox(
+            height: 30,
           ),
           const GroupedExpenses(),
         ],

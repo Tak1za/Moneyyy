@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-import 'package:moneyyy/helpers/date_helpers.dart';
 import 'package:moneyyy/models/grouped_expense.dart';
 
 import '../models/expense.dart';
@@ -49,46 +48,7 @@ class ExpenseList extends StatelessWidget {
 
           final data = snapshot.requireData;
 
-          List<GroupedExpense> groupedData = [];
-          for (var element in data.docs) {
-            final nowDate = DateTime.now();
-            final elementDate = (element['dateTime'] as Timestamp).toDate();
-            final formattedElementDate =
-                DateTime(elementDate.year, elementDate.month, elementDate.day);
-            final formattedNowDate =
-                DateTime(nowDate.year, nowDate.month, nowDate.day);
-
-            String group;
-            if (formattedElementDate.isToday()) {
-              group = "Today";
-            } else if (formattedElementDate.isAfter(
-              formattedNowDate.subtract(
-                Duration(days: formattedNowDate.weekday),
-              ),
-            )) {
-              if (formattedElementDate.isYesterday()) {
-                group = "Yesterday";
-              } else {
-                group = DateFormat("MMMM d, yyyy").format(formattedElementDate);
-              }
-            } else {
-              continue;
-            }
-
-            groupedData.add(
-              GroupedExpense(
-                data: Expense(
-                  id: element.id,
-                  image: element['image'],
-                  category: element['category'],
-                  note: element['note'],
-                  costRupees: element['costRupees'],
-                  dateTime: (element['dateTime'] as Timestamp).toDate(),
-                ),
-                group: group,
-              ),
-            );
-          }
+          List<GroupedExpense> groupedData = getGroupedExpenses(data);
 
           if (groupedData.isEmpty) {
             return const Padding(
