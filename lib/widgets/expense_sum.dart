@@ -19,7 +19,7 @@ class ExpenseSum extends StatelessWidget {
       fit: BoxFit.contain,
       child: Container(
         alignment: Alignment.center,
-        height: 300,
+        height: 250,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:moneyyy/widgets/time_selector.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../widgets/expense_list.dart';
@@ -32,6 +33,7 @@ class ExpensesScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [
           ExpenseSum(),
+          TimeSelector(),
           ExpenseList(),
         ],
       ),

@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:moneyyy/models/chart_data.dart';
 import 'package:moneyyy/widgets/expense_value.dart';
 import 'package:moneyyy/widgets/grouped_expenses.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../widgets/chart.dart';
+import '../widgets/time_selector.dart';
 
 class ReportsScreen extends StatefulWidget {
   const ReportsScreen({Key? key}) : super(key: key);
@@ -42,44 +41,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
             height: 30,
           ),
           Chart(records),
-          SizedBox(
-            height: 70,
-            child: Center(
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                children: [
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      "Week",
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      "Month",
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      "Year",
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          const TimeSelector(),
           const GroupedExpenses(),
         ],
       ),
