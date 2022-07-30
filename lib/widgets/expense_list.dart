@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:moneyyy/models/grouped_expense.dart';
+import 'package:moneyyy/models/time_period_enum.dart';
 
 import '../models/expense.dart';
 import 'expense_row.dart';
 
 class ExpenseList extends StatelessWidget {
-  const ExpenseList({Key? key}) : super(key: key);
+  final TimePeriod timePeriod;
+
+  const ExpenseList(this.timePeriod, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +51,8 @@ class ExpenseList extends StatelessWidget {
 
           final data = snapshot.requireData;
 
-          List<GroupedExpense> groupedData = getGroupedExpenses(data);
+          List<GroupedExpense> groupedData =
+              getGroupedExpenses(data, timePeriod);
 
           if (groupedData.isEmpty) {
             return const Padding(

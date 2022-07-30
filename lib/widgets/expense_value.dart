@@ -2,11 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:moneyyy/models/expense.dart';
+import 'package:moneyyy/models/time_period_enum.dart';
 
 class ExpenseValue extends StatelessWidget {
   final Stream<QuerySnapshot<Object?>> records;
+  final TimePeriod timePeriod;
 
-  const ExpenseValue(this.records, {Key? key}) : super(key: key);
+  const ExpenseValue(this.records, this.timePeriod, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,7 @@ class ExpenseValue extends StatelessWidget {
 
         final data = snapshot.requireData;
 
-        sumOfExpenses = getSumOfExpenses(data);
+        sumOfExpenses = getSumOfExpenses(data, timePeriod);
 
         return Text(
           currencyFormat.format(sumOfExpenses),

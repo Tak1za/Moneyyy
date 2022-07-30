@@ -63,59 +63,62 @@ class GroupedExpenses extends StatelessWidget {
             );
           }
 
-          return ListView.separated(
-            itemBuilder: (BuildContext ctx, int index) {
-              return Row(
-                children: [
-                  Image.asset(
-                    groupedCategories[index].image,
-                    height: 30,
-                    width: 30,
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 5),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            groupedCategories[index].category,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: ListView.separated(
+              itemBuilder: (BuildContext ctx, int index) {
+                return Row(
+                  children: [
+                    Image.asset(
+                      groupedCategories[index].image,
+                      height: 30,
+                      width: 30,
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              groupedCategories[index].category,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            "${groupedCategories[index].entries} ${groupedCategories[index].entries > 1 ? 'entries' : 'entry'}",
-                            style: const TextStyle(
-                              color: Colors.grey,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          )
-                        ],
+                            Text(
+                              "${groupedCategories[index].entries} ${groupedCategories[index].entries > 1 ? 'entries' : 'entry'}",
+                              style: const TextStyle(
+                                color: Colors.grey,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  FittedBox(
-                    fit: BoxFit.cover,
-                    child: Text(
-                      currencyFormat.format(groupedCategories[index].sum),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                    FittedBox(
+                      fit: BoxFit.cover,
+                      child: Text(
+                        currencyFormat.format(groupedCategories[index].sum),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                        maxLines: 1,
                       ),
-                      maxLines: 1,
-                    ),
-                  )
-                ],
-              );
-            },
-            separatorBuilder: (BuildContext ctx, int index) {
-              return const Divider();
-            },
-            itemCount: groupedCategories.length,
+                    )
+                  ],
+                );
+              },
+              separatorBuilder: (BuildContext ctx, int index) {
+                return const Divider();
+              },
+              itemCount: groupedCategories.length,
+            ),
           );
         },
       ),

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:moneyyy/widgets/expense_value.dart';
 import 'package:moneyyy/widgets/grouped_expenses.dart';
 
+import '../models/time_period_enum.dart';
 import '../widgets/chart.dart';
 import '../widgets/time_selector.dart';
 
@@ -23,6 +24,14 @@ class _ReportsScreenState extends State<ReportsScreen> {
   final currencyFormat =
       NumberFormat.currency(locale: 'en_IN', symbol: '₹', decimalDigits: 0);
 
+  var _timePeriod = TimePeriod.Week;
+
+  void selectTimePeriod(TimePeriod timePeriod) {
+    setState(() {
+      _timePeriod = timePeriod;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -30,10 +39,10 @@ class _ReportsScreenState extends State<ReportsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ExpenseValue(records),
-          const Text(
-            "Total spent this week",
-            style: TextStyle(
+          ExpenseValue(records, _timePeriod),
+          Text(
+            "Total spent this ${_timePeriod.name.toLowerCase()}",
+            style: const TextStyle(
               color: Colors.grey,
             ),
           ),
@@ -41,7 +50,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
             height: 30,
           ),
           Chart(records),
-          const TimeSelector(),
+          TimeSelector(_timePeriod, selectTimePeriod),
           const GroupedExpenses(),
         ],
       ),

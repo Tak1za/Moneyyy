@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:moneyyy/models/time_period_enum.dart';
 import 'package:moneyyy/widgets/expense_value.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../screens/add_expense_screen.dart';
 
 class ExpenseSum extends StatelessWidget {
-  const ExpenseSum({Key? key}) : super(key: key);
+  final TimePeriod timePeriod;
+
+  const ExpenseSum(this.timePeriod, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +26,13 @@ class ExpenseSum extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              "Spent this week",
-              style: TextStyle(
+            Text(
+              "Spent this ${timePeriod.name.toLowerCase()}",
+              style: const TextStyle(
                 color: Colors.grey,
               ),
             ),
-            ExpenseValue(records),
+            ExpenseValue(records, timePeriod),
             const SizedBox(
               height: 20,
             ),
