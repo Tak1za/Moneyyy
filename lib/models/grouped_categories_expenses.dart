@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:moneyyy/helpers/date_helpers.dart';
+import 'package:moneyyy/models/time_period_enum.dart';
 
 import 'expense_type.dart';
 
@@ -18,23 +19,39 @@ class GroupedCategoriesExpenses {
 }
 
 List<GroupedCategoriesExpenses> getGroupedCategoriesExpenses(
-    QuerySnapshot<Object?> data) {
+    QuerySnapshot<Object?> data, TimePeriod timePeriod) {
   List<GroupedCategoriesExpenses> groupedCategories = [];
+  final nowDate = DateTime.now();
+  final formattedNowDate = DateTime(nowDate.year, nowDate.month, nowDate.day);
+  Duration toSubtract;
+
+  switch (timePeriod) {
+    case TimePeriod.Week:
+      toSubtract = Duration(days: formattedNowDate.weekday);
+      break;
+    case TimePeriod.Month:
+      toSubtract = Duration(days: formattedNowDate.day);
+      break;
+    case TimePeriod.Year:
+      final formattedFirstDateOfYear = DateTime(nowDate.year, 1, 1);
+      toSubtract = Duration(
+          days:
+              formattedNowDate.difference(formattedFirstDateOfYear).inDays + 1);
+      break;
+  }
+
   getExpenseTypes().forEach((ExpenseType expenseType) {
     int sum = 0;
     int entries = 0;
     for (var element in data.docs) {
-      final nowDate = DateTime.now();
       final elementDate = (element['dateTime'] as Timestamp).toDate();
       final formattedElementDate =
           DateTime(elementDate.year, elementDate.month, elementDate.day);
-      final formattedNowDate =
-          DateTime(nowDate.year, nowDate.month, nowDate.day);
 
       if (formattedElementDate.isToday() ||
           formattedElementDate.isAfter(
             formattedNowDate.subtract(
-              Duration(days: formattedNowDate.weekday),
+              toSubtract,
             ),
           )) {
         if (element['category'] == expenseType.category) {

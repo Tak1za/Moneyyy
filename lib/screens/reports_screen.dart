@@ -49,9 +49,9 @@ class _ReportsScreenState extends State<ReportsScreen> {
           const SizedBox(
             height: 30,
           ),
-          Chart(records),
+          Chart(records, _timePeriod),
           TimeSelector(_timePeriod, selectTimePeriod),
-          const GroupedExpenses(),
+          GroupedExpenses(_timePeriod),
         ],
       ),
     );

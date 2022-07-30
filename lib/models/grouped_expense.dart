@@ -15,27 +15,28 @@ class GroupedExpense {
 List<GroupedExpense> getGroupedExpenses(
     QuerySnapshot<Object?> data, TimePeriod timePeriod) {
   List<GroupedExpense> groupedData = [];
+  Duration toSubtract;
+  final nowDate = DateTime.now();
+  final formattedNowDate = DateTime(nowDate.year, nowDate.month, nowDate.day);
+
+  switch (timePeriod) {
+    case TimePeriod.Week:
+      toSubtract = Duration(days: formattedNowDate.weekday);
+      break;
+    case TimePeriod.Month:
+      toSubtract = Duration(days: formattedNowDate.day);
+      break;
+    case TimePeriod.Year:
+      final formattedFirstDateOfYear = DateTime(nowDate.year, 1, 1);
+      toSubtract = Duration(
+          days:
+              formattedNowDate.difference(formattedFirstDateOfYear).inDays + 1);
+      break;
+  }
+
   for (var doc in data.docs) {
-    final nowDate = DateTime.now();
     final docDate = (doc['dateTime'] as Timestamp).toDate();
     final formattedDocDate = DateTime(docDate.year, docDate.month, docDate.day);
-    final formattedNowDate = DateTime(nowDate.year, nowDate.month, nowDate.day);
-    Duration toSubtract;
-
-    switch (timePeriod) {
-      case TimePeriod.Week:
-        toSubtract = Duration(days: formattedNowDate.weekday);
-        break;
-      case TimePeriod.Month:
-        toSubtract = Duration(days: formattedNowDate.day);
-        break;
-      case TimePeriod.Year:
-        final formattedFirstDateOfYear = DateTime(nowDate.year, 1, 1);
-        toSubtract = Duration(
-            days: formattedNowDate.difference(formattedFirstDateOfYear).inDays +
-                1);
-        break;
-    }
 
     String group;
     if (formattedDocDate.isToday()) {

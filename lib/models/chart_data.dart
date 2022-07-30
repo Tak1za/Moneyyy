@@ -3,6 +3,7 @@ import 'package:moneyyy/helpers/date_helpers.dart';
 import 'package:moneyyy/models/grouped_expense.dart';
 
 import 'expense.dart';
+import 'time_period_enum.dart';
 
 class ChartData {
   final String x;
@@ -11,34 +12,43 @@ class ChartData {
   ChartData(this.x, this.y);
 }
 
-List<ChartData> getChartDataForWeek(QuerySnapshot<Object?> data) {
+List<ChartData> getChartData(
+    QuerySnapshot<Object?> data, TimePeriod timePeriod) {
   List<ChartData> chartData = [];
   List<GroupedExpense> groupedData = [];
-  for (var element in data.docs) {
-    final nowDate = DateTime.now();
-    final elementDate = (element['dateTime'] as Timestamp).toDate();
-    final formattedElementDate =
-        DateTime(elementDate.year, elementDate.month, elementDate.day);
-    final formattedNowDate = DateTime(nowDate.year, nowDate.month, nowDate.day);
+  final nowDate = DateTime.now();
+  final formattedNowDate = DateTime(nowDate.year, nowDate.month, nowDate.day);
+  Duration toSubtract;
+
+  switch (timePeriod) {
+    case TimePeriod.Week:
+      toSubtract = Duration(days: formattedNowDate.weekday);
+      break;
+    case TimePeriod.Month:
+      toSubtract = Duration(days: formattedNowDate.day);
+      break;
+    case TimePeriod.Year:
+      final formattedFirstDateOfYear = DateTime(nowDate.year, 1, 1);
+      toSubtract = Duration(
+          days:
+              formattedNowDate.difference(formattedFirstDateOfYear).inDays + 1);
+      break;
+  }
+
+  for (var doc in data.docs) {
+    final docDate = (doc['dateTime'] as Timestamp).toDate();
+    final formattedDocDate = DateTime(docDate.year, docDate.month, docDate.day);
 
     String group;
-    if (formattedElementDate.isToday()) {
-      group = DateTime.now().getWeekday(DateTime.now().weekday);
-    } else if (formattedElementDate.isAfter(
+    if (formattedDocDate.isAfter(
       formattedNowDate.subtract(
-        Duration(days: formattedNowDate.weekday),
+        toSubtract,
       ),
     )) {
-      if (formattedElementDate.isYesterday()) {
-        group = DateTime.now().getWeekday(
-          DateTime.now()
-              .subtract(
-                const Duration(days: 1),
-              )
-              .weekday,
-        );
+      if (timePeriod == TimePeriod.Year) {
+        group = formattedDocDate.getMonth(formattedDocDate.month);
       } else {
-        group = formattedElementDate.getWeekday(formattedElementDate.weekday);
+        group = formattedDocDate.getWeekday(formattedDocDate.weekday);
       }
     } else {
       continue;
@@ -47,26 +57,51 @@ List<ChartData> getChartDataForWeek(QuerySnapshot<Object?> data) {
     groupedData.add(
       GroupedExpense(
         data: Expense(
-          id: element.id,
-          image: element['image'],
-          category: element['category'],
-          note: element['note'],
-          costRupees: element['costRupees'],
-          dateTime: (element['dateTime'] as Timestamp).toDate(),
+          id: doc.id,
+          image: doc['image'],
+          category: doc['category'],
+          note: doc['note'],
+          costRupees: doc['costRupees'],
+          dateTime: (doc['dateTime'] as Timestamp).toDate(),
         ),
         group: group,
       ),
     );
   }
 
-  List<String> weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  for (var weekday in weekdays) {
-    int sum = 0;
-    groupedData
-        .where((element) => element.group == weekday)
-        .forEach((element) => sum += element.data.costRupees);
+  if (timePeriod == TimePeriod.Year) {
+    List<String> months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ];
+    for (var month in months) {
+      int sum = 0;
+      groupedData
+          .where((element) => element.group == month)
+          .forEach((element) => sum += element.data.costRupees);
 
-    chartData.add(ChartData(weekday, sum));
+      chartData.add(ChartData(month, sum));
+    }
+  } else {
+    List<String> weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    for (var weekday in weekdays) {
+      int sum = 0;
+      groupedData
+          .where((element) => element.group == weekday)
+          .forEach((element) => sum += element.data.costRupees);
+
+      chartData.add(ChartData(weekday, sum));
+    }
   }
 
   return chartData;
