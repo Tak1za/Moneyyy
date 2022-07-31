@@ -64,6 +64,7 @@ class Chart extends StatelessWidget {
               majorTickLines: const MajorTickLines(width: 2),
               majorGridLines: const MajorGridLines(width: 0),
               axisLine: const AxisLine(width: 0),
+              labelFormat: '₹ {value}',
             ),
             plotAreaBorderWidth: 0,
             tooltipBehavior: TooltipBehavior(
