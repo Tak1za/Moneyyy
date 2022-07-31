@@ -37,14 +37,12 @@ class GroupedExpenses extends StatelessWidget {
           }
 
           if (!snapshot.hasData) {
-            return const Padding(
-              padding: EdgeInsets.all(20),
+            return Padding(
+              padding: const EdgeInsets.all(20),
               child: Center(
                 child: Text(
                   "Start adding your spends for this week to view them",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
+                  style: Theme.of(context).textTheme.titleLarge,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -58,14 +56,12 @@ class GroupedExpenses extends StatelessWidget {
                   data, timePeriod, selectedFilterIndex, oneSelected);
 
           if (groupedCategories.isEmpty) {
-            return const Padding(
-              padding: EdgeInsets.all(20),
+            return Padding(
+              padding: const EdgeInsets.all(20),
               child: Center(
                 child: Text(
                   "Start adding your spends for this week to view them",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
+                  style: Theme.of(context).textTheme.titleLarge,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -92,18 +88,17 @@ class GroupedExpenses extends StatelessWidget {
                           children: [
                             Text(
                               groupedCategories[index].category,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
+                              style: Theme.of(context).textTheme.titleLarge,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               "${groupedCategories[index].entries} ${groupedCategories[index].entries > 1 ? 'entries' : 'entry'}",
-                              style: const TextStyle(
-                                color: Colors.grey,
-                              ),
-                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    color: Colors.grey,
+                                  ),
                             )
                           ],
                         ),
@@ -113,10 +108,7 @@ class GroupedExpenses extends StatelessWidget {
                       fit: BoxFit.cover,
                       child: Text(
                         currencyFormat.format(groupedCategories[index].sum),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
+                        style: Theme.of(context).textTheme.titleLarge,
                         maxLines: 1,
                       ),
                     )

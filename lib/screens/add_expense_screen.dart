@@ -48,20 +48,17 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(
-          color: Colors.black,
-          size: 17,
-        ),
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        iconTheme: Theme.of(context).iconTheme,
         elevation: 0,
-        title: const Text(
+        title: Text(
           "Expense",
           style: TextStyle(
-            color: Colors.black,
+            color: Theme.of(context).primaryColor,
           ),
         ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -90,13 +87,16 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     keyboardType: TextInputType.number,
                     textAlign: TextAlign.center,
                     controller: costController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: "0",
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
                     ),
                     showCursor: false,
-                    style: const TextStyle(
-                      fontSize: 40,
-                    ),
+                    style: Theme.of(context).textTheme.displayLarge,
                     inputFormatters: [
                       CurrencyTextInputFormatter(
                         decimalDigits: 0,
@@ -146,9 +146,12 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       child: TextField(
                         autofocus: true,
                         controller: noteController,
-                        decoration: const InputDecoration(
-                          hintText: "Add a note",
-                        ),
+                        decoration: InputDecoration(
+                            hintText: "Add a note",
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ))),
                         showCursor: false,
                       ),
                     ),
@@ -162,12 +165,12 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   children: [
                     Row(
                       children: [
-                        const Text(
+                        Text(
                           "Credit Card",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                         ),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10),
@@ -204,17 +207,17 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                             child: Container(
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                  color: Colors.black,
+                                  color: Theme.of(context).primaryColor,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               padding: const EdgeInsets.all(5),
-                              child: const Text(
+                              child: Text(
                                 "Save",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w800,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall
+                                    ?.copyWith(fontSize: 12),
                               ),
                             ),
                           )

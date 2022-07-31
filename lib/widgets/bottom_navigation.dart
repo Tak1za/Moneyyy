@@ -14,14 +14,12 @@ class BottomNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       iconSize: 30,
-      selectedIconTheme: const IconThemeData(
-        color: Colors.black,
-      ),
+      selectedIconTheme:
+          Theme.of(context).bottomNavigationBarTheme.selectedIconTheme,
       showSelectedLabels: false,
       showUnselectedLabels: false,
-      unselectedIconTheme: const IconThemeData(
-        color: Colors.grey,
-      ),
+      unselectedIconTheme:
+          Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.list),
@@ -37,7 +35,6 @@ class BottomNavigation extends StatelessWidget {
         ),
       ],
       currentIndex: selectedIndex,
-      selectedItemColor: Colors.amber[800],
       onTap: onItemTapped,
     );
   }

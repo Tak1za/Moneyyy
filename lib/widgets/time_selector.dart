@@ -28,17 +28,17 @@ class TimeSelector extends StatelessWidget {
                     ? BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color: Colors.black,
+                          color: Theme.of(context).primaryColor,
                         ),
                       )
                     : null,
                 padding: const EdgeInsets.all(5),
                 child: Text(
                   TimePeriod.values[index].name,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w800,
-                  ),
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        fontSize: 12,
+                        letterSpacing: 1,
+                      ),
                 ),
               ),
             );

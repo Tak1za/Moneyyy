@@ -35,14 +35,12 @@ class ExpenseList extends StatelessWidget {
           }
 
           if (!snapshot.hasData) {
-            return const Padding(
-              padding: EdgeInsets.all(20),
+            return Padding(
+              padding: const EdgeInsets.all(20),
               child: Center(
                 child: Text(
                   "Start adding your spends for this week to view them",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
+                  style: Theme.of(context).textTheme.titleLarge,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -55,14 +53,12 @@ class ExpenseList extends StatelessWidget {
               getGroupedExpenses(data, timePeriod);
 
           if (groupedData.isEmpty) {
-            return const Padding(
-              padding: EdgeInsets.all(20),
+            return Padding(
+              padding: const EdgeInsets.all(20),
               child: Center(
                 child: Text(
                   "Start adding your spends for this week to view them",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
+                  style: Theme.of(context).textTheme.titleLarge,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -118,15 +114,17 @@ class ExpenseList extends StatelessWidget {
                   children: [
                     Text(
                       value,
-                      style: const TextStyle(
-                        color: Colors.grey,
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                     Text(
                       currencyFormat.format(sum),
-                      style: const TextStyle(
-                        color: Colors.grey,
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
                     )
                   ],
                 ),

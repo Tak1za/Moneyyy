@@ -28,11 +28,11 @@ class _CategoriesModalState extends State<CategoriesModal> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
+                Text(
                   "CATEGORIES",
-                  style: TextStyle(
-                    color: Colors.grey,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Colors.grey,
+                      ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(
@@ -61,11 +61,7 @@ class _CategoriesModalState extends State<CategoriesModal> {
                             ),
                             Text(
                               e.category,
-                              style: const TextStyle(
-                                color: Colors.grey,
-                                fontSize: 10,
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                              style: Theme.of(context).textTheme.titleSmall,
                             ),
                           ],
                         ),
@@ -90,10 +86,9 @@ class _CategoriesModalState extends State<CategoriesModal> {
           ),
           Text(
             widget.selectedCategory,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            ),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
           ),
         ],
       ),

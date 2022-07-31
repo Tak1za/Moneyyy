@@ -5,7 +5,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../models/chart_data.dart';
 
-class Chart extends StatefulWidget {
+class Chart extends StatelessWidget {
   final Stream<QuerySnapshot<Object?>> records;
   final TimePeriod timePeriod;
   final void Function(int index) setSelectedFilterIndex;
@@ -15,31 +15,13 @@ class Chart extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<Chart> createState() => _ChartState();
-}
-
-class _ChartState extends State<Chart> {
-  late SelectionBehavior _selectionBehavior;
-  bool oneSelected = false;
-
-  @override
-  void initState() {
-    _selectionBehavior = SelectionBehavior(
-      enable: true,
-      selectedColor: Colors.black,
-      unselectedColor: Colors.grey,
-    );
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
       padding: const EdgeInsets.only(right: 10),
       height: 200,
       child: StreamBuilder<QuerySnapshot>(
-        stream: widget.records,
+        stream: records,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Text("Something went wrong");
@@ -50,16 +32,15 @@ class _ChartState extends State<Chart> {
           }
 
           if (!snapshot.hasData) {
-            return const Text(
+            return Text(
               "Start adding spends to view your report",
-              style: TextStyle(fontSize: 40),
+              style: Theme.of(context).textTheme.displayLarge,
             );
           }
 
           final data = snapshot.requireData;
 
-          final List<ChartData> chartData =
-              getChartData(data, widget.timePeriod);
+          final List<ChartData> chartData = getChartData(data, timePeriod);
 
           int maxValue = -1;
           for (var c in chartData) {
@@ -97,16 +78,20 @@ class _ChartState extends State<Chart> {
                 dataSource: chartData,
                 xValueMapper: (ChartData data, _) => data.x,
                 yValueMapper: (ChartData data, _) => data.y,
-                color: Colors.black,
                 borderRadius: BorderRadius.circular(5),
-                selectionBehavior: widget.timePeriod != TimePeriod.Today
-                    ? _selectionBehavior
+                color: Theme.of(context).primaryColor,
+                selectionBehavior: timePeriod != TimePeriod.Today
+                    ? SelectionBehavior(
+                        enable: true,
+                        selectedColor: Theme.of(context).primaryColor,
+                        unselectedColor: Colors.grey,
+                      )
                     : null,
               ),
             ],
             selectionType: SelectionType.point,
             onSelectionChanged: (selectionArgs) {
-              widget.setSelectedFilterIndex(selectionArgs.pointIndex);
+              setSelectedFilterIndex(selectionArgs.pointIndex);
             },
           );
         },

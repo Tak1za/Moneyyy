@@ -74,27 +74,24 @@ class ExpenseRow extends StatelessWidget {
                         children: [
                           Text(
                             expense.category,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
+                            style: Theme.of(context).textTheme.titleLarge,
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
                             expense.note,
-                            style: const TextStyle(
-                              color: Colors.grey,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  color: Colors.grey,
+                                ),
                             overflow: TextOverflow.ellipsis,
                           )
                         ],
                       )
                     : Text(
                         expense.category,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
+                        style: Theme.of(context).textTheme.titleLarge,
                         overflow: TextOverflow.ellipsis,
                       ),
               ),
@@ -103,10 +100,7 @@ class ExpenseRow extends StatelessWidget {
               fit: BoxFit.cover,
               child: Text(
                 currencyFormat.format(expense.costRupees),
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
+                style: Theme.of(context).textTheme.titleLarge,
                 maxLines: 1,
               ),
             )

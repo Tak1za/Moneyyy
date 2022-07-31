@@ -10,6 +10,9 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("settings screen"));
+    return Center(
+      child: Text("settings screen",
+          style: Theme.of(context).textTheme.titleLarge),
+    );
   }
 }

@@ -28,9 +28,9 @@ class ExpenseSum extends StatelessWidget {
           children: [
             Text(
               "Spent ${timePeriod != TimePeriod.Today ? 'this' : ''} ${timePeriod.name.toLowerCase()}",
-              style: const TextStyle(
-                color: Colors.grey,
-              ),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Colors.grey,
+                  ),
             ),
             ExpenseValue(records, timePeriod, -1, false),
             const SizedBox(
@@ -49,17 +49,17 @@ class ExpenseSum extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Colors.black,
+                    color: Theme.of(context).primaryColor,
                   ),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 padding: const EdgeInsets.all(5),
-                child: const Text(
+                child: Text(
                   "Add Expense",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w800,
-                  ),
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        fontSize: 12,
+                        letterSpacing: 1,
+                      ),
                 ),
               ),
             ),

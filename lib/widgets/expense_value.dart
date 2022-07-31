@@ -36,7 +36,7 @@ class ExpenseValue extends StatelessWidget {
         if (!snapshot.hasData) {
           return Text(
             currencyFormat.format(0),
-            style: const TextStyle(fontSize: 40),
+            style: Theme.of(context).textTheme.displayLarge,
           );
         }
 
@@ -47,7 +47,7 @@ class ExpenseValue extends StatelessWidget {
 
         return Text(
           currencyFormat.format(sumOfExpenses),
-          style: const TextStyle(fontSize: 40),
+          style: Theme.of(context).textTheme.displayLarge,
         );
       },
     );
