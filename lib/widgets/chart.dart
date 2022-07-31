@@ -95,7 +95,9 @@ class _ChartState extends State<Chart> {
                 yValueMapper: (ChartData data, _) => data.y,
                 color: Colors.black,
                 borderRadius: BorderRadius.circular(5),
-                selectionBehavior: _selectionBehavior,
+                selectionBehavior: widget.timePeriod != TimePeriod.Today
+                    ? _selectionBehavior
+                    : null,
               ),
             ],
             selectionType: SelectionType.point,
