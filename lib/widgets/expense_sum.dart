@@ -27,7 +27,7 @@ class ExpenseSum extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Spent this ${timePeriod.name.toLowerCase()}",
+              "Spent ${timePeriod != TimePeriod.Today ? 'this' : ''} ${timePeriod.name.toLowerCase()}",
               style: const TextStyle(
                 color: Colors.grey,
               ),

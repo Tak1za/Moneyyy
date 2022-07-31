@@ -21,6 +21,9 @@ List<ChartData> getChartData(
   Duration toSubtract;
 
   switch (timePeriod) {
+    case TimePeriod.Today:
+      toSubtract = const Duration(days: -1);
+      break;
     case TimePeriod.Week:
       toSubtract = Duration(days: formattedNowDate.weekday);
       break;
@@ -40,11 +43,12 @@ List<ChartData> getChartData(
     final formattedDocDate = DateTime(docDate.year, docDate.month, docDate.day);
 
     String group;
-    if (formattedDocDate.isAfter(
-      formattedNowDate.subtract(
-        toSubtract,
-      ),
-    )) {
+    if (formattedDocDate.isToday() ||
+        formattedDocDate.isAfter(
+          formattedNowDate.subtract(
+            toSubtract,
+          ),
+        )) {
       if (timePeriod == TimePeriod.Year) {
         group = formattedDocDate.getMonth(formattedDocDate.month);
       } else {

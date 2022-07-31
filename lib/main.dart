@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   final List<Widget> _navigationOptions = [
-    ExpensesScreen(),
+    const ExpensesScreen(),
     const ReportsScreen(),
     const SettingsScreen(),
   ];

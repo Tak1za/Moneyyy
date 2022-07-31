@@ -24,7 +24,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
   final currencyFormat =
       NumberFormat.currency(locale: 'en_IN', symbol: '₹', decimalDigits: 0);
 
-  var _timePeriod = TimePeriod.Week;
+  var _timePeriod = TimePeriod.Today;
 
   void selectTimePeriod(TimePeriod timePeriod) {
     setState(() {

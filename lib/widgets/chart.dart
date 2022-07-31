@@ -5,11 +5,28 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../models/chart_data.dart';
 
-class Chart extends StatelessWidget {
+class Chart extends StatefulWidget {
   final Stream<QuerySnapshot<Object?>> records;
   final TimePeriod timePeriod;
 
   const Chart(this.records, this.timePeriod, {Key? key}) : super(key: key);
+
+  @override
+  State<Chart> createState() => _ChartState();
+}
+
+class _ChartState extends State<Chart> {
+  late SelectionBehavior _selectionBehavior;
+
+  @override
+  void initState() {
+    _selectionBehavior = SelectionBehavior(
+      enable: true,
+      selectedColor: Colors.black,
+      unselectedColor: Colors.grey,
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +35,7 @@ class Chart extends StatelessWidget {
       padding: const EdgeInsets.only(right: 10),
       height: 200,
       child: StreamBuilder<QuerySnapshot>(
-        stream: records,
+        stream: widget.records,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Text("Something went wrong");
@@ -37,7 +54,8 @@ class Chart extends StatelessWidget {
 
           final data = snapshot.requireData;
 
-          final List<ChartData> chartData = getChartData(data, timePeriod);
+          final List<ChartData> chartData =
+              getChartData(data, widget.timePeriod);
 
           int maxValue = -1;
           for (var c in chartData) {
@@ -63,7 +81,11 @@ class Chart extends StatelessWidget {
               axisLine: const AxisLine(width: 0),
             ),
             plotAreaBorderWidth: 0,
-            tooltipBehavior: TooltipBehavior(enable: true),
+            tooltipBehavior: TooltipBehavior(
+              enable: true,
+              activationMode: ActivationMode.longPress,
+              canShowMarker: true,
+            ),
             enableAxisAnimation: true,
             enableSideBySideSeriesPlacement: true,
             series: <ChartSeries<ChartData, String>>[
@@ -73,8 +95,10 @@ class Chart extends StatelessWidget {
                 yValueMapper: (ChartData data, _) => data.y,
                 color: Colors.black,
                 borderRadius: BorderRadius.circular(5),
+                selectionBehavior: _selectionBehavior,
               ),
             ],
+            selectionType: SelectionType.point,
           );
         },
       ),

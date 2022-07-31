@@ -26,6 +26,9 @@ List<GroupedCategoriesExpenses> getGroupedCategoriesExpenses(
   Duration toSubtract;
 
   switch (timePeriod) {
+    case TimePeriod.Today:
+      toSubtract = const Duration(days: -1);
+      break;
     case TimePeriod.Week:
       toSubtract = Duration(days: formattedNowDate.weekday);
       break;

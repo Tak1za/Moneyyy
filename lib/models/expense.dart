@@ -27,6 +27,9 @@ int getSumOfExpenses(QuerySnapshot<Object?> data, TimePeriod timePeriod) {
   final formattedNowDate = DateTime(nowDate.year, nowDate.month, nowDate.day);
 
   switch (timePeriod) {
+    case TimePeriod.Today:
+      toSubtract = const Duration(days: -1);
+      break;
     case TimePeriod.Week:
       toSubtract = Duration(days: formattedNowDate.weekday);
       break;

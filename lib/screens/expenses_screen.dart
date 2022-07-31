@@ -21,7 +21,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
       .orderBy('dateTime', descending: true)
       .snapshots();
 
-  var _timePeriod = TimePeriod.Week;
+  var _timePeriod = TimePeriod.Today;
 
   void selectTimePeriod(TimePeriod timePeriod) {
     setState(() {
