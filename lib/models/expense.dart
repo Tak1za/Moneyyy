@@ -20,7 +20,8 @@ class Expense {
   });
 }
 
-int getSumOfExpenses(QuerySnapshot<Object?> data, TimePeriod timePeriod) {
+int getSumOfExpenses(QuerySnapshot<Object?> data, TimePeriod timePeriod,
+    int selectedFilterIndex, bool oneSelected) {
   int sum = 0;
   Duration toSubtract;
   final nowDate = DateTime.now();
@@ -55,7 +56,25 @@ int getSumOfExpenses(QuerySnapshot<Object?> data, TimePeriod timePeriod) {
             toSubtract,
           ),
         )) {
-      sum += element['costRupees'] as int;
+      if (selectedFilterIndex == -1 || !oneSelected) {
+        sum += element['costRupees'] as int;
+      } else {
+        switch (timePeriod) {
+          case TimePeriod.Month:
+          case TimePeriod.Week:
+            if (formattedElementDate.weekday == selectedFilterIndex + 1) {
+              sum += element['costRupees'] as int;
+            }
+            break;
+          case TimePeriod.Year:
+            if (formattedElementDate.month == selectedFilterIndex + 1) {
+              sum += element['costRupees'] as int;
+            }
+            break;
+          default:
+            break;
+        }
+      }
     }
   }
 

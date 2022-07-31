@@ -50,9 +50,9 @@ List<ChartData> getChartData(
           ),
         )) {
       if (timePeriod == TimePeriod.Year) {
-        group = formattedDocDate.getMonth(formattedDocDate.month);
+        group = formattedDocDate.getMonth(formattedDocDate.month, false);
       } else {
-        group = formattedDocDate.getWeekday(formattedDocDate.weekday);
+        group = formattedDocDate.getWeekday(formattedDocDate.weekday, false);
       }
     } else {
       continue;

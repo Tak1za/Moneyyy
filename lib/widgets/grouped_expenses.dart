@@ -7,8 +7,13 @@ import '../models/grouped_categories_expenses.dart';
 
 class GroupedExpenses extends StatelessWidget {
   final TimePeriod timePeriod;
+  final int selectedFilterIndex;
+  final bool oneSelected;
 
-  const GroupedExpenses(this.timePeriod, {Key? key}) : super(key: key);
+  const GroupedExpenses(
+      this.timePeriod, this.selectedFilterIndex, this.oneSelected,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +54,8 @@ class GroupedExpenses extends StatelessWidget {
           final data = snapshot.requireData;
 
           List<GroupedCategoriesExpenses> groupedCategories =
-              getGroupedCategoriesExpenses(data, timePeriod);
+              getGroupedCategoriesExpenses(
+                  data, timePeriod, selectedFilterIndex, oneSelected);
 
           if (groupedCategories.isEmpty) {
             return const Padding(

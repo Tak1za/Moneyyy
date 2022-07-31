@@ -19,7 +19,10 @@ class GroupedCategoriesExpenses {
 }
 
 List<GroupedCategoriesExpenses> getGroupedCategoriesExpenses(
-    QuerySnapshot<Object?> data, TimePeriod timePeriod) {
+    QuerySnapshot<Object?> data,
+    TimePeriod timePeriod,
+    int selectedFilterIndex,
+    bool oneSelected) {
   List<GroupedCategoriesExpenses> groupedCategories = [];
   final nowDate = DateTime.now();
   final formattedNowDate = DateTime(nowDate.year, nowDate.month, nowDate.day);
@@ -57,9 +60,33 @@ List<GroupedCategoriesExpenses> getGroupedCategoriesExpenses(
               toSubtract,
             ),
           )) {
-        if (element['category'] == expenseType.category) {
-          sum += element['costRupees'] as int;
-          entries++;
+        if (selectedFilterIndex == -1 || !oneSelected) {
+          if (element['category'] == expenseType.category) {
+            sum += element['costRupees'] as int;
+            entries++;
+          }
+        } else {
+          switch (timePeriod) {
+            case TimePeriod.Month:
+            case TimePeriod.Week:
+              if (formattedElementDate.weekday == selectedFilterIndex + 1) {
+                if (element['category'] == expenseType.category) {
+                  sum += element['costRupees'] as int;
+                  entries++;
+                }
+              }
+              break;
+            case TimePeriod.Year:
+              if (formattedElementDate.month == selectedFilterIndex + 1) {
+                if (element['category'] == expenseType.category) {
+                  sum += element['costRupees'] as int;
+                  entries++;
+                }
+              }
+              break;
+            default:
+              break;
+          }
         }
       }
     }

@@ -7,8 +7,12 @@ import 'package:moneyyy/models/time_period_enum.dart';
 class ExpenseValue extends StatelessWidget {
   final Stream<QuerySnapshot<Object?>> records;
   final TimePeriod timePeriod;
+  final int selectedFilterIndex;
+  final bool oneSelected;
 
-  const ExpenseValue(this.records, this.timePeriod, {Key? key})
+  const ExpenseValue(
+      this.records, this.timePeriod, this.selectedFilterIndex, this.oneSelected,
+      {Key? key})
       : super(key: key);
 
   @override
@@ -38,7 +42,8 @@ class ExpenseValue extends StatelessWidget {
 
         final data = snapshot.requireData;
 
-        sumOfExpenses = getSumOfExpenses(data, timePeriod);
+        sumOfExpenses = getSumOfExpenses(
+            data, timePeriod, selectedFilterIndex, oneSelected);
 
         return Text(
           currencyFormat.format(sumOfExpenses),

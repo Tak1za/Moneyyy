@@ -32,7 +32,7 @@ class ExpenseSum extends StatelessWidget {
                 color: Colors.grey,
               ),
             ),
-            ExpenseValue(records, timePeriod),
+            ExpenseValue(records, timePeriod, -1, false),
             const SizedBox(
               height: 20,
             ),

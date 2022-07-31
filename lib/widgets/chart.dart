@@ -8,8 +8,11 @@ import '../models/chart_data.dart';
 class Chart extends StatefulWidget {
   final Stream<QuerySnapshot<Object?>> records;
   final TimePeriod timePeriod;
+  final void Function(int index) setSelectedFilterIndex;
 
-  const Chart(this.records, this.timePeriod, {Key? key}) : super(key: key);
+  const Chart(this.records, this.timePeriod, this.setSelectedFilterIndex,
+      {Key? key})
+      : super(key: key);
 
   @override
   State<Chart> createState() => _ChartState();
@@ -17,6 +20,7 @@ class Chart extends StatefulWidget {
 
 class _ChartState extends State<Chart> {
   late SelectionBehavior _selectionBehavior;
+  bool oneSelected = false;
 
   @override
   void initState() {
@@ -101,6 +105,9 @@ class _ChartState extends State<Chart> {
               ),
             ],
             selectionType: SelectionType.point,
+            onSelectionChanged: (selectionArgs) {
+              widget.setSelectedFilterIndex(selectionArgs.pointIndex);
+            },
           );
         },
       ),
