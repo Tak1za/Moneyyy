@@ -49,6 +49,16 @@ class Chart extends StatelessWidget {
             }
           }
 
+          double barWidth = 0.1;
+          if (timePeriod != TimePeriod.Today) {
+            barWidth = 0.6;
+          }
+
+          double maxVisible = 0;
+          if (timePeriod != TimePeriod.Today) {
+            maxVisible = 7;
+          }
+
           return SfCartesianChart(
             primaryXAxis: CategoryAxis(
               majorGridLines: const MajorGridLines(width: 0),
@@ -56,6 +66,12 @@ class Chart extends StatelessWidget {
               axisLine: const AxisLine(width: 0),
               interval: 1,
               labelRotation: 90,
+              visibleMinimum: 0,
+              visibleMaximum: maxVisible,
+              name: "Time",
+            ),
+            zoomPanBehavior: ZoomPanBehavior(
+              enablePanning: true,
             ),
             primaryYAxis: NumericAxis(
               minimum: 0,
@@ -65,6 +81,7 @@ class Chart extends StatelessWidget {
               majorGridLines: const MajorGridLines(width: 0),
               axisLine: const AxisLine(width: 0),
               labelFormat: '₹ {value}',
+              name: "Cost",
             ),
             plotAreaBorderWidth: 0,
             tooltipBehavior: TooltipBehavior(
@@ -80,6 +97,7 @@ class Chart extends StatelessWidget {
                 xValueMapper: (ChartData data, _) => data.x,
                 yValueMapper: (ChartData data, _) => data.y,
                 borderRadius: BorderRadius.circular(5),
+                width: barWidth,
                 color: Theme.of(context).primaryColor,
                 selectionBehavior: timePeriod != TimePeriod.Today
                     ? SelectionBehavior(

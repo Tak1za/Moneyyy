@@ -96,6 +96,14 @@ List<ChartData> getChartData(
 
       chartData.add(ChartData(month, sum));
     }
+  } else if (timePeriod == TimePeriod.Today) {
+    int sum = 0;
+    groupedData
+        .where((element) =>
+            element.group == nowDate.getWeekday(nowDate.weekday, false))
+        .forEach((element) => sum += element.data.costRupees);
+
+    chartData.add(ChartData(nowDate.getWeekday(nowDate.weekday, false), sum));
   } else {
     List<String> weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     for (var weekday in weekdays) {
