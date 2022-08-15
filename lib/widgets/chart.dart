@@ -60,7 +60,7 @@ class Chart extends StatelessWidget {
             primaryYAxis: NumericAxis(
               minimum: 0,
               maximum: maxValue.toDouble(),
-              interval: maxValue.toDouble() / 2,
+              interval: maxValue == 0 ? 1000 : maxValue.toDouble() / 2,
               majorTickLines: const MajorTickLines(width: 2),
               majorGridLines: const MajorGridLines(width: 0),
               axisLine: const AxisLine(width: 0),
